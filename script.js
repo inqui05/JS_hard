@@ -1,21 +1,21 @@
-let money = 1200;
-let income = '700';
-let addExpenses = 'taxes, football, cat, fee';
-let deposit = false;
-let mission = 100000;
-let period = 10;
+let num = 266219;
 
-console.log( typeof money );
-console.log( typeof income );
-console.log( typeof deposit );
+let numString = String( num );
+let result = 1; 
 
-console.log( addExpenses.length );
+for (let i = 0; i < numString.length; i++) {
+    result *= +( numString[i] );
+}
 
-console.log( `Период равен ${period} месяцев` );
-console.log( `Цель заработать ${mission} рублей` );
+let power3 = result;
 
-addExpenses = addExpenses.toLowerCase();
-console.log( addExpenses.split(', '));
+for (let i = 1; i < 3; i++) {
+    power3 *= result;
+}
 
-let budgetDay = money / 30;
-console.log( budgetDay );
+power3 = String( power3 );
+alert(+(power3.substr(0,2)));
+
+
+
+
