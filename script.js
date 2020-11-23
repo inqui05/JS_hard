@@ -3,8 +3,8 @@
 let lang = confirm( 'Вы согласны установить русский язык? При отмене будет выставлен английский!' );
 let namePerson = prompt( 'Введите имя', 'Артем' );
 let arr = [
-    ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
     ['Monday', "Tuesday", 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sanday'],
+    ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
 ];
 
 //пункт 1 через if
@@ -27,7 +27,7 @@ switch(lang){
 }
 
 //пункт 1 через многомерный массив и без if/switch
-lang ? console.log(arr[0].join(', ')) : console.log(arr[1].join(', '));
+lang ? console.log(arr[+lang].join(', ')) : console.log(arr[+lang].join(', '));
 
 //пункт 2
 (namePerson === 'Артем') ? console.log( 'директор' ) : 
