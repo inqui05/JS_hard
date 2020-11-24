@@ -1,11 +1,12 @@
+'use strict'
 /*В задание не было указано, что необходимо производить проверку входных данных, 
 поэтому по умолчанию подразумевается, что пользователь вводит данные в нужном формате*/
 let lang = confirm( 'Вы согласны установить русский язык? При отмене будет выставлен английский!' );
 let namePerson = prompt( 'Введите имя', 'Артем' );
-let arr = [
-    ['Monday', "Tuesday", 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sanday'],
-    ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
-];
+let dayOfTheWeek = {
+    false: 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sanday',
+    true: 'Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье'
+};
 
 //пункт 1 через if
 if (lang){
@@ -27,7 +28,7 @@ switch(lang){
 }
 
 //пункт 1 через многомерный массив и без if/switch
-lang ? console.log(arr[+lang].join(', ')) : console.log(arr[+lang].join(', '));
+console.log(dayOfTheWeek[lang]);
 
 //пункт 2
 (namePerson === 'Артем') ? console.log( 'директор' ) : 
