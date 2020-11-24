@@ -1,35 +1,32 @@
-'use strict'
-/*В задание не было указано, что необходимо производить проверку входных данных, 
-поэтому по умолчанию подразумевается, что пользователь вводит данные в нужном формате*/
-let lang = confirm( 'Вы согласны установить русский язык? При отмене будет выставлен английский!' );
-let namePerson = prompt( 'Введите имя', 'Артем' );
-let dayOfTheWeek = {
-    false: 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sanday',
-    true: 'Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье'
-};
+'use strict';
+/*Я бы мог сделать все одной большой функцией (вроде так в задании). Но раз лучше сразу 
+делать правильно, то как я понял из теории - одна функция должна делать только одну работу*/
+let data = '    It is a string! Ahahaha hohoho hihihi   ',
+    maxCharacters = 30;
 
-//пункт 1 через if
-if (lang){
-    console.log( 'Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье' );
-} else {
-    console.log( 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sanday');
-}
-
-//пункт 1 через switch-case
-switch(lang){
-    case true: {
-        console.log( 'Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье' );
-        break;
-    }
-    case false: {
-        console.log( 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sanday');
-        break;
+function isString( data ){
+    if ( typeof data !== 'string' ){
+        return false;
+    } else {
+        return true;
     }
 }
 
-//пункт 1 через многомерный массив и без if/switch
-console.log(dayOfTheWeek[lang]);
+function fixTheString( data ){
+    data = data.trim();
+    if ( data.length > maxCharacters ){
+        return data.substring(0, maxCharacters) + '...' ;
+    } else {
+        return data;
+    }
+}
 
-//пункт 2
-(namePerson === 'Артем') ? console.log( 'директор' ) : 
-    (namePerson === 'Максим') ? console.log( 'преподаватель' ) : console.log( 'студент' );
+function checkAndFix(data){
+    if (isString(data)){
+        return fixTheString(data);
+    } else {
+        return 'Unfortunately, your data is not a string!';
+    }
+}
+
+console.log( checkAndFix( data) );
