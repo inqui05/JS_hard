@@ -1,51 +1,47 @@
 'use strict';
-let arr = ['1532', '28462.2', '956.2848', '4542', '632.1', '9595.25', '444.444'],
-    maxNumber = 100;
+let text = 'Угадай число от 1 до 100';
 
-function isWantedNumbers( str ){
-    if ( +str.substring( 0, 1 ) === 2 || +str.substring( 0, 1 ) === 4){
-        return true;
+function startGame(){
+    let number = Math.floor(Math.random() * 100) + 1,
+        attempts = 10;
+    askPersonNumber(text, number, attempts);
+}
+
+function isNumber(data){
+    return !isNaN(parseFloat(data)) && isFinite(data);
+}
+
+function askPersonNumber(text, number, attempts){
+    if (attempts === 0){
+        if (confirm('Попытки закончились, хотите сыграть еще?')) {
+            startGame();
+        } else {
+            alert('Спасибо за игру!');
+        }
     } else {
-        return false;
-    }
-}
+        let ask = prompt(text); 
+        console.dir(ask);
 
-function findNumbers(anyArr){
-    let trueNumbersArr = [];
-    for( let i = 0; i < anyArr.length ; i++ ){
-        if ( isWantedNumbers( anyArr[i] ) ){
-            trueNumbersArr.push( anyArr[i] );
+        if (ask === null){
+            alert('Игра окончена!');
+        } else if (!isNumber(ask)){
+            askPersonNumber('Введи число!', number, attempts);
+        } else {
+              if(+ask === number){
+                if (confirm('Поздравляю, Вы угадали!!! Хотели бы сыграть еще?')){
+                    startGame();
+                }
+            } else if (+ask > number){
+                attempts--;
+                alert(`Загаданное число меньше, осталось ${attempts} попыток...`);
+                askPersonNumber('Пробуй! Напоминаю, от 1 до 100:', number, attempts);
+            } else {
+                attempts--;
+                alert(`Загаданное число больше, осталось ${attempts} попыток...`);
+                askPersonNumber('Пробуй! Напоминаю, от 1 до 100:', number, attempts);
+            }
         }
-    }
-    return trueNumbersArr;
+    }  
 }
 
-/*Вообще, я и саv не знаю, нужна ли тут функция. Не знаю, насколько это важно, но решил написать
- чистую функцию выше (хотя можно туда запихнуть console.log и не дурить голову).
- Правда тут все равно уперся в то, что так не получится. Буду рад комментарию, что делать в этом случае*/
-function printNumbers(anyArr){
-    for( let i = 0; i < anyArr.length ; i++){
-        console.log( anyArr[i] );
-    }
-}
-
-//the second part of homework
-function isPrimeNumber(number){
-    for ( let i = 2; i < number; i++){
-        if (number % i === 0 && number !== 2){
-            return false;
-        }
-    }
-    return true;
-}
-
-function printPrimeNumbers(number){
-    for ( let i = 2; i < number; i++){
-        if (isPrimeNumber(i)){
-            console.log(i + ` - делители этого числа ${1} и ${i}`);
-        }
-    }
-}
-
-printNumbers( findNumbers(arr) );
-printPrimeNumbers(maxNumber);
+startGame();
