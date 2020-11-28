@@ -14,14 +14,9 @@ let daysOfTheWeek = ["Понедельник", "Вторник", "Среда", "
     }
 
     function print(arr){
-        let finalResult = null;
         for (let i = 0; i < arr.length; i++){
-            finalResult += (checkTheDays(daysOfTheWeek, i, currentDay)) + "\n";
+            document.write(checkTheDays(daysOfTheWeek, i, currentDay)  + "<br>") ;
         }
-        alert(finalResult);
     }
 
     print(daysOfTheWeek);
-
-    /*жирный .bold() курсив .italics()
-    */
