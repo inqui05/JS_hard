@@ -56,7 +56,7 @@ let daysOfTheWeek = ["Понедельник", "Вторник", "Среда", "
     function printTheSecondWay(){
         let date = new Date();
         document.write(`${addZero(date.getDate())}.${addZero(date.getMonth() + 1)}.
-        ${date.getFullYear()} - ${addZero(date.getHours())}:${addZero(date.getHours())}
+        ${date.getFullYear()} - ${addZero(date.getHours())}:${addZero(date.getMinutes())}
         :${addZero(date.getSeconds())}<br/>`);
     }
 
