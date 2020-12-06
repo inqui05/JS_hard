@@ -1,9 +1,9 @@
 'use strict';
 
-const todoControl = document.querySelector('.todo-control'), //
-    headerInput = document.querySelector('.header-input'),  //ввод задания
-    todoList = document.querySelector('.todo-list'), //не выполненое задание
-    todoCompleted = document.querySelector('.todo-completed'); //выполнено ли задание
+const todoControl = document.querySelector('.todo-control'),
+    headerInput = document.querySelector('.header-input'), 
+    todoList = document.querySelector('.todo-list'), 
+    todoCompleted = document.querySelector('.todo-completed'); 
 
     const todoData = [
 
@@ -34,7 +34,7 @@ const todoControl = document.querySelector('.todo-control'), //
                 todoList.append(li);
             }
 
-            const btnTodoComplete = li.querySelector('.todo-complete'); //кнопка задание выполнено
+            const btnTodoComplete = li.querySelector('.todo-complete');
             btnTodoComplete.addEventListener('click', function(){
                 item.completed = !item.completed;
                 render();
