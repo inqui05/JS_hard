@@ -40,6 +40,7 @@ const todoControl = document.querySelector('.todo-control'),
             const btnTodoComplete = li.querySelector('.todo-complete');
             btnTodoComplete.addEventListener('click', function(){
                 item.completed = !item.completed;
+                localStorage.todo = JSON.stringify(todoData);
                 render();
             });
 
