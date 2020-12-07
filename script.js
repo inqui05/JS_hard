@@ -10,11 +10,14 @@ const todoControl = document.querySelector('.todo-control'),
     ];
 
     const render = function(){
-        if (todoData.length === 0){
-            JSON.parse(localStorage.getItem('todo')).forEach(function(value){
-                todoData.push(value);
-            });
+        if (JSON.parse(localStorage.getItem('todo')) !== null){
+            if (todoData.length === 0){
+                JSON.parse(localStorage.getItem('todo')).forEach(function(value){
+                    todoData.push(value);
+                });
+            }
         }
+        
         todoList.textContent = '';
         todoCompleted.textContent = '';
 
