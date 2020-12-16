@@ -1,7 +1,6 @@
 'use strict';
 const daysOfTheWeek = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],
-    timeOfDay = ['Доброе утро!', 'Добрый день!', 'Добрый вечер!', 'Доброй ночи!'],
-    h1 = document.querySelector('h1');
+    timeOfDay = ['Доброе утро!', 'Добрый день!', 'Добрый вечер!', 'Доброй ночи!'];
 let date = new Date();
 
 function addZero(number){
@@ -12,34 +11,32 @@ function addZero(number){
     }
 }
 
-function addDay(){
-    let day = document.createElement("p");
+function addWelcome(){
+    const element = document.querySelector('.welcome');
     if (date.getHours() >= 0 && date.getHours() < 6) {
-        day.textContent = timeOfDay[3];
+        element.textContent = timeOfDay[3];
     } else if (date.getHours() >= 6 && date.getHours() < 12) {
-        day.textContent = timeOfDay[0];
+        element.textContent = timeOfDay[0];
     } else if (date.getHours() >= 12 && date.getHours() < 18) {
-        day.textContent = timeOfDay[1];
+        element.textContent = timeOfDay[1];
     } else {
-        day.textContent = timeOfDay[2];
+        element.textContent = timeOfDay[2];
     }
-    h1.after(day);
 }
 
 function addDayOfTheWeek(){
-    let day = document.createElement("p");
-    day.textContent = `Сегодня: ${daysOfTheWeek[date.getDay() - 1]}`;
-    h1.after(day);
+    const element = document.querySelector('.today');
+    element.textContent = `Сегодня: ${daysOfTheWeek[date.getDay() - 1]}`;
 }
 
 function addCurrentTime(){
-    let day = document.createElement("p");
-    day.textContent = `Текущее время: ${addZero(date.getHours())}:${addZero(date.getMinutes())}:${addZero(date.getSeconds())}`;
-    h1.after(day);
+    const element = document.querySelector('.time');
+    let date = new Date();
+    element.textContent = `Текущее время: ${addZero(date.getHours())}:${addZero(date.getMinutes())}:${addZero(date.getSeconds())}`;
 }
 
 function howLongToNY(){
-    let day = document.createElement("p");
+    const element = document.querySelector('.NY');
     const untilNY = new Date('01/01/2021').getTime(),
         dateNow = new Date().getTime(),
         timeRemaining = (untilNY - dateNow) / 1000;
@@ -47,18 +44,17 @@ function howLongToNY(){
     let daysToNY = Math.floor(timeRemaining / 60 / 60 / 24);
 
     if (daysToNY > 4) {
-        day.textContent = `До нового года осталось ${daysToNY} дней`;
+        element.textContent = `До нового года осталось ${daysToNY} дней`;
     } else if(daysToNY <= 4 && daysToNY > 1) {
-        day.textContent = `До нового года осталось ${daysToNY} дня`;
+        element.textContent = `До нового года осталось ${daysToNY} дня`;
     } else if(daysToNY === 1) {
-        day.textContent = `До нового года осталось ${daysToNY} день`;
+        element.textContent = `До нового года осталось ${daysToNY} день`;
     } else {
-        day.textContent = `Уже Новый год!`;
+        element.textContent = `Уже Новый год!`;
     }
-    h1.after(day);
 }
 
-    howLongToNY();
-    addCurrentTime();
-    addDayOfTheWeek();
-    addDay();
+    setInterval(howLongToNY, 1000);
+    setInterval(addCurrentTime, 1000);
+    setInterval(addDayOfTheWeek,1000);
+    setInterval(addWelcome, 1000);
