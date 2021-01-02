@@ -1,60 +1,100 @@
 'use strict';
-const daysOfTheWeek = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],
-    timeOfDay = ['Доброе утро!', 'Добрый день!', 'Добрый вечер!', 'Доброй ночи!'];
-let date = new Date();
 
-function addZero(number){
-    if (number < 10){
-        return '0' + number.toString();
-    } else {
-        return number;
+
+
+/*class Todo {
+    constructor(form, input, todoList, todoCompleted) {
+        this.form = document.querySelector(form);
+        this.input = document.querySelector(input);
+        this.todoList = document.querySelector(todoList);
+        this.todoCompleted = document.querySelector(todoCompleted);
+        this.todoData = new Map(JSON.parse(localStorage.getItem('todoList')));
+    }
+
+    addToStorage() {
+        localStorage.setItem('todoList', JSON.stringify([...this.todoData]));
+    }
+
+    render() {
+        this.todoList.textContent = '';
+        this.todoCompleted.textContent = '';
+        this.todoData.forEach(this.createItem, this);
+        this.addToStorage();
+        this.input.value = '';
+    }
+
+    createItem(todo) {
+        const li = document.createElement('li');
+        li.classList.add('todo-item');
+        li.key = todo.key;
+        li.insertAdjacentHTML('beforeend', `
+        <span class="text-todo">${todo.value}</span>
+        <div class="todo-buttons">
+            <button class="todo-remove"></button>
+            <button class="todo-complete"></button>
+        </div>
+        `);
+
+        if (todo.completed) {
+            this.todoCompleted.append(li);
+        } else {
+            this.todoList.append(li);
+        }
+    }
+
+    addTodo(e) {
+        e.preventDefault();
+        if (this.input.value.trim()) {
+            const newTodo = {
+                value: this.input.value,
+                completed: false,
+                key: this.generateKey(),
+            };
+            this.todoData.set(newTodo.key, newTodo);
+            this.render();
+        } else {
+            alert('В список задач нельзя вносить пустую строку!');
+        }
+    }
+
+    generateKey() {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    }
+
+    deleteItem(item) {
+        this.todoData.forEach((elem, index) => {
+            if (item.key === index) {
+                this.todoData.delete(index);
+            }
+        });
+        this.render();
+    }
+
+    completedItem(item) {
+        this.todoData.forEach((elem, index) => {
+            if (item.key === index) {
+                elem.completed = !elem.completed;
+            }
+        });
+        this.render(item);
+    }
+
+    handler() {
+        document.querySelector('.todo-container').addEventListener('click', event => {
+            const target = event.target;
+            if (target.matches('.todo-remove')) {
+                this.deleteItem(target.closest('.todo-item'));
+            } else if (target.matches('.todo-complete')) {
+                this.completedItem(target.closest('.todo-item'));
+            }
+        });
+    }
+
+    unit() {
+        this.form.addEventListener('submit', this.addTodo.bind(this));
+        this.render();
+        this.handler();
     }
 }
-
-function addWelcome(){
-    const element = document.querySelector('.welcome');
-    if (date.getHours() >= 0 && date.getHours() < 6) {
-        element.textContent = timeOfDay[3];
-    } else if (date.getHours() >= 6 && date.getHours() < 12) {
-        element.textContent = timeOfDay[0];
-    } else if (date.getHours() >= 12 && date.getHours() < 18) {
-        element.textContent = timeOfDay[1];
-    } else {
-        element.textContent = timeOfDay[2];
-    }
-}
-
-function addDayOfTheWeek(){
-    const element = document.querySelector('.today');
-    element.textContent = `Сегодня: ${daysOfTheWeek[date.getDay() - 1]}`;
-}
-
-function addCurrentTime(){
-    const element = document.querySelector('.time');
-    let date = new Date();
-    element.textContent = `Текущее время: ${addZero(date.getHours())}:${addZero(date.getMinutes())}:${addZero(date.getSeconds())}`;
-}
-
-function howLongToNY(){
-    const element = document.querySelector('.NY');
-    const untilNY = new Date('01/01/2021').getTime(),
-        dateNow = new Date().getTime(),
-        timeRemaining = (untilNY - dateNow) / 1000;
-
-    let daysToNY = Math.floor(timeRemaining / 60 / 60 / 24);
-
-    if (daysToNY > 4) {
-        element.textContent = `До нового года осталось ${daysToNY} дней`;
-    } else if(daysToNY <= 4 && daysToNY > 1) {
-        element.textContent = `До нового года осталось ${daysToNY} дня`;
-    } else if(daysToNY === 1) {
-        element.textContent = `До нового года осталось ${daysToNY} день`;
-    } else {
-        element.textContent = `Уже Новый год!`;
-    }
-}
-
-    setInterval(howLongToNY, 1000);
-    setInterval(addCurrentTime, 1000);
-    setInterval(addDayOfTheWeek,1000);
-    setInterval(addWelcome, 1000);
+const todo = new Todo('.todo-control', '.header-input', '.todo-list', '.todo-completed');
+todo.unit();*/

@@ -4,15 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Lesson18</title>
+    <title>Bonus 01.01.2021</title>
 </head>
 <body>
-    <h1>Домашняя работа к уроку 18!</h1>
-    <div class="welcome"></div>
-    <div class="today"></div>
-    <div class="time"></div>
-    <div class="NY"></div>
-
+    <h2>Добавить автомобиль в таблицу</h2>
+    <div class="container-add-auto">
+					<input type="text" class="add_producer" placeholder="Марка">
+					<input type="text" class="add_model" placeholder="Модель">
+					<input type="text" min="1" step="1" class="add_year" placeholder="Год выпуска">
+                    <input type="text" min="1" step="1" class="add_kilometers" placeholder="Пробег">
+                    <button id="btn" class="add_auto">Добавить автомобиль</button>
+    </div>
+    <h2>Фильтры для таблицы</h2>
+    <div class="filter-auto">
+        <input type="text" class="find_producer" placeholder="Марка">
+        <input type="text" class="find_model" placeholder="Модель">
+        <input type="text" min="1" step="1" class="find_year" placeholder="Год выпуска">
+        <input type="text" min="1" step="1" class="find_kilometers" placeholder="Пробег">
+    </div>
+    <table>
+        <thead>
+            <th>№</th>
+            <th>Марка</th>
+            <th>Модель</th>
+            <th>Год выпуска</th>
+            <th>Пробег</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Mercedes-Benz</td>
+            <td>C220</td>
+            <td>2009</td>
+            <td>184550</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Mini</td>
+            <td>Cooper</td>
+            <td>2012</td>
+            <td>154023</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>BMW</td>
+            <td>X3</td>
+            <td>2015</td>
+            <td>99999</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Маzda</td>
+            <td>6</td>
+            <td>2018</td>
+            <td>24250</td>
+          </tr>
+        </tbody>
+      </table>
     <script src="script.js"></script>
 </body>
 </html>
