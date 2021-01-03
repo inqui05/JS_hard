@@ -18,35 +18,25 @@
       </form>
     </div>
     <h2>Фильтры для таблицы</h2>
-    <div class="filter-auto">
+    <div class="auto-filtration">
+      <form class="filter-auto">
         <input type="text" class="find_producer" placeholder="Марка">
         <input type="text" class="find_model" placeholder="Модель">
         <input type="text" min="1" step="1" class="find_year" placeholder="Год выпуска">
         <input type="text" min="1" step="1" class="find_kilometers" placeholder="Пробег">
+      </form>
     </div>
     <table id="table">
         <thead>
+          <tr>
             <th>№</th>
             <th>Марка</th>
             <th>Модель</th>
             <th>Год выпуска</th>
             <th>Пробег</th>
+          </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mercedes-Benz</td>
-            <td>C220</td>
-            <td>2009</td>
-            <td>184550</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Mini</td>
-            <td>Cooper</td>
-            <td>2012</td>
-            <td>154023</td>
-          </tr>
         </tbody>
       </table>
     <script src="script.js"></script>

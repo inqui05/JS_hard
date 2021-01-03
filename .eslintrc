@@ -14,11 +14,7 @@
       4
       //"tab"
     ],
-    "linebreak-style": [
-      "error",
-      // "windows"
-       "unix"
-    ],
+    "linebreak-style": 0,
     "semi": [
       "error",
       "always"

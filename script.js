@@ -1,16 +1,16 @@
 'use strict';
 const producer = document.querySelector('.add_producer'),
-      model = document.querySelector('.add_model'),
-      year = document.querySelector('.add_year'),
-      kilometers = document.querySelector('.add_kilometers'),
-      btn = document.getElementById('btn'),
-      table = document.getElementById('table'),
-      addAuto = document.querySelector('.add-auto ');
+    model = document.querySelector('.add_model'),
+    year = document.querySelector('.add_year'),
+    kilometers = document.querySelector('.add_kilometers'),
+    table = document.getElementById('table'),
+    tbody = document.querySelector('tbody'),
+    addAuto = document.querySelector('.add-auto'),
+    filterAuto = document.querySelector('.filter-auto');
 
-//let rows = Array.from(table.rows);
-//console.log(rows[2].cells[2]);
+let myRows = Array.from(table.rows);
 
-let listOfAuto = [  
+let listOfAuto = [
     {
         producer: 'Mercedes-Benz',
         model: 'C220',
@@ -30,7 +30,7 @@ let listOfAuto = [
         kilometers: 99999
     },
     {
-        producer: 'Маzda',
+        producer: 'Mazda',
         model: 6,
         year: 2018,
         kilometers: 24250
@@ -48,15 +48,15 @@ let listOfAuto = [
         kilometers: 222152
     },
     {
-        producer: 'Маzda',
+        producer: 'Mazda',
         model: 3,
         year: 2009,
         kilometers: 259532
     },
 ];
 
-const addNewAutoInTabs = (obj) => {
-    let rows = Array.from(table.rows);
+const addNewAutoInTabs = obj => {
+    const rows = Array.from(table.rows);
 
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -67,31 +67,32 @@ const addNewAutoInTabs = (obj) => {
                         <td>${obj.year}</td>
                         <td>${obj.kilometers}</td>
                     </tr>`;
-    table.append(row);
+    tbody.append(row);
 };
 
 const render = () => {
-    if (JSON.parse(localStorage.getItem('autoTable')) !== null){
-        if (JSON.parse(localStorage.getItem('autoTable')).length > listOfAuto.length){
+    if (JSON.parse(localStorage.getItem('autoTable')) !== null) {
+        if (JSON.parse(localStorage.getItem('autoTable')).length > listOfAuto.length) {
             listOfAuto = [];
-            JSON.parse(localStorage.getItem('autoTable')).forEach((value) => {
+            JSON.parse(localStorage.getItem('autoTable')).forEach(value => {
                 listOfAuto.push(value);
             });
         }
     }
 
-    while(table.rows.length > 1) {
+    while (table.rows.length > 1) {
         table.deleteRow(1);
     }
 
-    listOfAuto.forEach(function(item){
+    listOfAuto.forEach(item => {
         addNewAutoInTabs(item);
     });
+    myRows = Array.from(table.rows);
 };
 
-addAuto.addEventListener('submit', function(event){
+addAuto.addEventListener('submit', event => {
     event.preventDefault();
-    if (producer.value === ''){
+    if (producer.value === '') {
         producer.style.backgroundColor = "red";
         return;
     } else if (model.value === '') {
@@ -125,79 +126,81 @@ addAuto.addEventListener('input', event => {
 });
 
 render();
+//сортируем строки таблицы
+const sortTable = (arr, index) => {
+    arr = arr.slice(1);
+    //выделено, чтобы числа сортировались как числа, а не ASCII символы
+    if (index === 4 || index === 3) {
+        arr.sort((row1, row2) => (+row1.cells[index].innerHTML > +row2.cells[index].innerHTML ? 1 : -1));
+    } else {
+        arr.sort((row1, row2) => (row1.cells[index].innerHTML > row2.cells[index].innerHTML ? 1 : -1));
+    }
 
-/*const todoControl = document.querySelector('.todo-control'),
-    headerInput = document.querySelector('.header-input'), 
-    todoList = document.querySelector('.todo-list'), 
-    todoCompleted = document.querySelector('.todo-completed'); 
+    //реализованно, чтобы при сортировке номера начинались с 1
+    for (let i = 0; i < arr.length; i++) {
+        arr[i].cells[0].innerHTML = (i + 1);
+    }
+    //элементы в массиве будут отсортированы, и после переноса удалятся со статой позиции
+    table.tBodies[0].append(...arr);
+};
 
-    const todoData = [
+myRows[0].addEventListener('click', event => {
+    const target = event.target;
+    let index;
+    switch (target.textContent) {
+    case '№':
+        index = 0;
+        break;
+    case 'Марка':
+        index = 1;
+        break;
+    case 'Модель':
+        index = 2;
+        break;
+    case 'Год выпуска':
+        index = 3;
+        break;
+    case 'Пробег':
+        index = 4;
+        break;
+    }
+    sortTable(myRows, index);
+});
 
-    ];
+//фильтруем строки таблицы
+const filterTable = (arr, index, value) => {
+    arr = arr.slice(1);
 
-    const render = function(){
-        if (JSON.parse(localStorage.getItem('todo')) !== null){
-            if (todoData.length === 0){
-                JSON.parse(localStorage.getItem('todo')).forEach(function(value){
-                    todoData.push(value);
-                });
-            }
+    for (let i = 0; i < arr.length;) {
+        if (!arr[i].cells[index].innerHTML.includes(value)) {
+            arr.splice(i, 1);
+        } else {
+            i++;
         }
-        
-        todoList.textContent = '';
-        todoCompleted.textContent = '';
+    }
+    //реализованно, чтобы при сортировке номера начинались с 1
+    for (let i = 0; i < arr.length; i++) {
+        arr[i].cells[0].innerHTML = (i + 1);
+    }
+    //очищаем таблицу, т.к. кол-во строк может уменьшиться
+    while (table.rows.length > 1) {
+        table.deleteRow(1);
+    }
+    //элементы в массиве будут отсортированы, и после переноса удалятся со статой позиции
+    table.tBodies[0].append(...arr);
+};
 
-        todoData.forEach(function(item){
-            const li = document.createElement('li');
-            li.classList.add('todo-item');
-
-            li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
-             '<div class="todo-buttons">' +
-             '<button class="todo-remove"></button>' +
-             '<button class="todo-complete"></button>' +
-             '</div>';
-
-            if (item.completed){
-                todoCompleted.append(li);
-            } else {
-                todoList.append(li);
-            }
-
-            const btnTodoComplete = li.querySelector('.todo-complete');
-            btnTodoComplete.addEventListener('click', function(){
-                item.completed = !item.completed;
-                localStorage.todo = JSON.stringify(todoData);
-                render();
-            });
-
-            const btnTodoRemove = li.querySelector('.todo-remove');
-            btnTodoRemove.addEventListener('click', function(){
-                todoData.forEach(function(value, i){
-                    if (value.value === item.value){
-                        todoData.splice(todoData[i], 1);
-                        localStorage.todo = JSON.stringify(todoData);
-                    }
-                });
-                render();
-            });
-        });
-    };
-
-    todoControl.addEventListener('submit', function(event){
-        event.preventDefault();
-
-        const newTodo = {
-            value: headerInput.value,
-            completed: false
-        };
-        
-        if(newTodo.value !== ''){
-            todoData.push(newTodo);
-            localStorage.todo = JSON.stringify(todoData);
-            headerInput.value = '';
-        }
-
-        render();
-    });
-
-    render();*/
+filterAuto.addEventListener('input', event => {
+    const target = event.target;
+    let index;
+    if (target.classList.contains('find_producer')) {
+        index = 1;
+    } else if (target.classList.contains('find_model')) {
+        index = 2;
+    } else if (target.classList.contains('find_year')) {
+        index = 3;
+    } else if (target.classList.contains('find_kilometers')) {
+        index = 4;
+    }
+    filterTable(myRows, index, target.value);
+});
