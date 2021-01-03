@@ -9,11 +9,13 @@
 <body>
     <h2>Добавить автомобиль в таблицу</h2>
     <div class="container-add-auto">
+      <form class="add-auto">
 					<input type="text" class="add_producer" placeholder="Марка">
 					<input type="text" class="add_model" placeholder="Модель">
 					<input type="text" min="1" step="1" class="add_year" placeholder="Год выпуска">
                     <input type="text" min="1" step="1" class="add_kilometers" placeholder="Пробег">
                     <button id="btn" class="add_auto">Добавить автомобиль</button>
+      </form>
     </div>
     <h2>Фильтры для таблицы</h2>
     <div class="filter-auto">
@@ -22,7 +24,7 @@
         <input type="text" min="1" step="1" class="find_year" placeholder="Год выпуска">
         <input type="text" min="1" step="1" class="find_kilometers" placeholder="Пробег">
     </div>
-    <table>
+    <table id="table">
         <thead>
             <th>№</th>
             <th>Марка</th>
@@ -44,20 +46,6 @@
             <td>Cooper</td>
             <td>2012</td>
             <td>154023</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>BMW</td>
-            <td>X3</td>
-            <td>2015</td>
-            <td>99999</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Маzda</td>
-            <td>6</td>
-            <td>2018</td>
-            <td>24250</td>
           </tr>
         </tbody>
       </table>
