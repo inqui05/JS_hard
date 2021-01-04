@@ -6,7 +6,14 @@ const producer = document.querySelector('.add_producer'),
     table = document.getElementById('table'),
     tbody = document.querySelector('tbody'),
     addAuto = document.querySelector('.add-auto'),
-    filterAuto = document.querySelector('.filter-auto');
+    filterAuto = document.querySelector('.filter-auto'),
+    findProducer = document.querySelector('.find_producer'),
+    findModel = document.querySelector('.find_model'),
+    findYear = document.querySelector('.find_year'),
+    findKilometers = document.querySelector('.find_kilometers');
+
+let sortCount = 1,
+    lastTarget = null;
 
 let myRows = Array.from(table.rows);
 
@@ -129,24 +136,35 @@ render();
 //сортируем строки таблицы
 const sortTable = (arr, index) => {
     arr = arr.slice(1);
-    //выделено, чтобы числа сортировались как числа, а не ASCII символы
-    if (index === 4 || index === 3) {
-        arr.sort((row1, row2) => (+row1.cells[index].innerHTML > +row2.cells[index].innerHTML ? 1 : -1));
+    let sort;
+
+    if (sortCount % 2) {
+        //выделено, чтобы числа сортировались как числа, а не ASCII символы
+        if (index === 4 || index === 3) {
+            arr.sort((row1, row2) => (+row1.cells[index].innerHTML < +row2.cells[index].innerHTML ? 1 : -1));
+        }    else {
+            arr.sort((row1, row2) => (row1.cells[index].innerHTML < row2.cells[index].innerHTML ? 1 : -1));
+        }
     } else {
-        arr.sort((row1, row2) => (row1.cells[index].innerHTML > row2.cells[index].innerHTML ? 1 : -1));
+        if (index === 4 || index === 3) {
+            arr.sort((row1, row2) => (+row1.cells[index].innerHTML > +row2.cells[index].innerHTML ? 1 : -1));
+        }    else {
+            arr.sort((row1, row2) => (row1.cells[index].innerHTML > row2.cells[index].innerHTML ? 1 : -1));
+        }
     }
 
     //реализованно, чтобы при сортировке номера начинались с 1
     for (let i = 0; i < arr.length; i++) {
         arr[i].cells[0].innerHTML = (i + 1);
     }
-    //элементы в массиве будут отсортированы, и после переноса удалятся со статой позиции
+    //элементы в массиве отсортированы и после вставки удалятся со старой позиции
     table.tBodies[0].append(...arr);
 };
 
 myRows[0].addEventListener('click', event => {
     const target = event.target;
     let index;
+
     switch (target.textContent) {
     case '№':
         index = 0;
@@ -164,20 +182,32 @@ myRows[0].addEventListener('click', event => {
         index = 4;
         break;
     }
+
+    if (target === lastTarget) {
+        sortCount++;
+    } else if (target !== lastTarget) {
+        lastTarget = target;
+        sortCount = 1;
+    }
     sortTable(myRows, index);
 });
 
 //фильтруем строки таблицы
-const filterTable = (arr, index, value) => {
+const filterTable = (arr, input) => {
     arr = arr.slice(1);
 
-    for (let i = 0; i < arr.length;) {
-        if (!arr[i].cells[index].innerHTML.includes(value)) {
-            arr.splice(i, 1);
-        } else {
-            i++;
+    for (let i = 0; i < input.length; i++) {
+        if (input[i] !== '') {
+            for (let j = 0; j < arr.length;) {
+                if (!arr[j].cells[i + 1].innerHTML.includes(input[i])) {
+                    arr.splice(j, 1);
+                } else {
+                    j++;
+                }
+            }
         }
     }
+
     //реализованно, чтобы при сортировке номера начинались с 1
     for (let i = 0; i < arr.length; i++) {
         arr[i].cells[0].innerHTML = (i + 1);
@@ -186,21 +216,11 @@ const filterTable = (arr, index, value) => {
     while (table.rows.length > 1) {
         table.deleteRow(1);
     }
-    //элементы в массиве будут отсортированы, и после переноса удалятся со статой позиции
+
     table.tBodies[0].append(...arr);
 };
 
-filterAuto.addEventListener('input', event => {
-    const target = event.target;
-    let index;
-    if (target.classList.contains('find_producer')) {
-        index = 1;
-    } else if (target.classList.contains('find_model')) {
-        index = 2;
-    } else if (target.classList.contains('find_year')) {
-        index = 3;
-    } else if (target.classList.contains('find_kilometers')) {
-        index = 4;
-    }
-    filterTable(myRows, index, target.value);
+filterAuto.addEventListener('input', () => {
+    const userInputArr = [findProducer.value, findModel.value, findYear.value, findKilometers.value];
+    filterTable(myRows, userInputArr);
 });
